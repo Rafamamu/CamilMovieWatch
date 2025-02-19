@@ -8,6 +8,8 @@ public class CamilMovieWatchApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CamilMovieWatchApplication.class, args);
+
+		System.out.println("Executado com sucesso...");
 	}
 
 }
