@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
 public class CategoryService {
@@ -22,6 +25,16 @@ public class CategoryService {
 
     public Category saveCategory(Category category) {
         return categoryRepository.save(category);
+
+    }
+
+    public Optional<Category>  findById(Long id) {
+        return categoryRepository.findById(id);
+    }
+
+    public void deleteCategory(Long id) {
+        categoryRepository.deleteById(id);
+
 
     }
 }
