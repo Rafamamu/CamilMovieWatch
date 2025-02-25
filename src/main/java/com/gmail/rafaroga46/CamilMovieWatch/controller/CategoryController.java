@@ -1,6 +1,9 @@
 package com.gmail.rafaroga46.CamilMovieWatch.controller;
 
+import com.gmail.rafaroga46.CamilMovieWatch.controller.request.CategoryRequest;
+import com.gmail.rafaroga46.CamilMovieWatch.controller.response.CategoryResponse;
 import com.gmail.rafaroga46.CamilMovieWatch.entity.Category;
+import com.gmail.rafaroga46.CamilMovieWatch.mapper.CategoryMapper;
 import com.gmail.rafaroga46.CamilMovieWatch.service.CategoryService;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +15,6 @@ import java.util.Optional;
 public class CategoryController {
 
 
-
     private final CategoryService categoryService;
 
     public CategoryController(CategoryService categoryService) {
@@ -20,22 +22,27 @@ public class CategoryController {
     }
 
     @GetMapping()
-    public List<Category> getAllCategories() {
-        return categoryService.findAll();
+    public List<CategoryResponse> getAllCategories() {
+        List<Category> categories = categoryService.findAll();
+        return categories.stream()
+                .map(CategoryMapper::toCategoryResponse)
+                .toList();
 
     }
 
     @PostMapping()
-    public Category saveCategory(@RequestBody Category category) {
-        return categoryService.saveCategory(category);
+    public CategoryResponse saveCategory(@RequestBody CategoryRequest request) {
+        Category newCategory = CategoryMapper.toCategory(request);
+        Category savedCategory = categoryService.saveCategory(newCategory);
+        return CategoryMapper.toCategoryResponse(savedCategory);
 
     }
 
     @GetMapping("/{id}")
-    public Category getByCategoryId(@PathVariable Long id) {
+    public CategoryResponse getByCategoryId(@PathVariable Long id) {
         Optional<Category> optCategory = categoryService.findById(id);
         if (optCategory.isPresent()) {
-            return optCategory.get();
+            return CategoryMapper.toCategoryResponse(optCategory.get());
         }
         return null;
     }
@@ -47,8 +54,6 @@ public class CategoryController {
 
 
     }
-
-
 
 
 }
