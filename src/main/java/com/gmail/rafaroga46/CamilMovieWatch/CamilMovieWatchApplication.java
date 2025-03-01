@@ -3,6 +3,7 @@ package com.gmail.rafaroga46.CamilMovieWatch;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+
 @SpringBootApplication
 public class CamilMovieWatchApplication {
 
@@ -10,6 +11,7 @@ public class CamilMovieWatchApplication {
 		SpringApplication.run(CamilMovieWatchApplication.class, args);
 
 		System.out.println("Executado com sucesso...");
-	}
 
+
+	}
 }
