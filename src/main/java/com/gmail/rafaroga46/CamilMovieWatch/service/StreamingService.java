@@ -2,7 +2,7 @@ package com.gmail.rafaroga46.CamilMovieWatch.service;
 
 import com.gmail.rafaroga46.CamilMovieWatch.entity.Streaming;
 import com.gmail.rafaroga46.CamilMovieWatch.repository.StreamingRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.AbstractPersistable_;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,15 +21,15 @@ public class StreamingService {
         return streamingRepository.findAll();
     }
 
-    public Streaming saveStreaming(Streaming streaming) {
+    public Streaming save(Streaming streaming) {
         return  streamingRepository.save(streaming);
     }
 
     public Optional<Streaming> findById(Long id) {
-        return streamingRepository.findById(id);
+        return streamingRepository.findById(AbstractPersistable_.id);
     }
 
-    public void deleteStreaming(Long id) {
+    public void delete(Long id) {
         streamingRepository.deleteById(id);
     }
 
