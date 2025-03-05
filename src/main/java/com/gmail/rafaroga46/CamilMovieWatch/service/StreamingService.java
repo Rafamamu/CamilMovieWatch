@@ -26,7 +26,7 @@ public class StreamingService {
     }
 
     public Optional<Streaming> findById(Long id) {
-        return streamingRepository.findById(AbstractPersistable_.id);
+        return streamingRepository.findById(id);
     }
 
     public void delete(Long id) {
