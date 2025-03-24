@@ -1,5 +1,6 @@
 package com.gmail.rafaroga46.CamilMovieWatch.service;
 
+import com.gmail.rafaroga46.CamilMovieWatch.controller.response.MovieResponse;
 import com.gmail.rafaroga46.CamilMovieWatch.entity.Category;
 import com.gmail.rafaroga46.CamilMovieWatch.entity.Movie;
 import com.gmail.rafaroga46.CamilMovieWatch.entity.Streaming;
@@ -33,6 +34,10 @@ public class MovieService {
 
     public List<Movie> findAll() {
         return movieRepository.findAll();
+    }
+
+    public  Optional<Movie> findById(Long id) {
+         return movieRepository.findById(id);
     }
 
     private List<Category> findCategories(List<Category> categories) {
