@@ -6,6 +6,7 @@ import com.gmail.rafaroga46.CamilMovieWatch.entity.Movie;
 import com.gmail.rafaroga46.CamilMovieWatch.entity.Streaming;
 import com.gmail.rafaroga46.CamilMovieWatch.repository.MovieRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,35 @@ public class MovieService {
 
     public  Optional<Movie> findById(Long id) {
          return movieRepository.findById(id);
+    }
+
+    public Optional<Movie> update(Long movieId, Movie updateMovie) {
+
+        List<Category> categories = this.findCategories(updateMovie.getCategories());
+        List<Streaming> streamings = this.findStreamings(updateMovie.getStreamings());
+
+        Optional<Movie> optMovie = movieRepository.findById(movieId);
+        if (optMovie.isPresent()) {
+
+            Movie movie = optMovie.get();
+            movie.setTitle(updateMovie.getTitle());
+            movie.setDescription(updateMovie.getDescription());
+            movie.setReleaseDate(updateMovie.getReleaseDate());
+            movie.setRating(updateMovie.getRating());
+
+            movie.getCategories().clear();
+            movie.getCategories().addAll(categories);
+
+            movie.getStreamings().clear();
+            movie.getStreamings().addAll(streamings);
+
+            movieRepository.save(movie);
+            return Optional.of(movie);
+
+
+        }
+
+        return Optional.empty();
     }
 
     private List<Category> findCategories(List<Category> categories) {
