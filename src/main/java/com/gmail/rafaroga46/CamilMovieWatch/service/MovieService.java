@@ -5,7 +5,10 @@ import com.gmail.rafaroga46.CamilMovieWatch.entity.Category;
 import com.gmail.rafaroga46.CamilMovieWatch.entity.Movie;
 import com.gmail.rafaroga46.CamilMovieWatch.entity.Streaming;
 import com.gmail.rafaroga46.CamilMovieWatch.repository.MovieRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
@@ -35,6 +38,10 @@ public class MovieService {
 
     public List<Movie> findAll() {
         return movieRepository.findAll();
+    }
+
+    public List<Movie> findByCategory(Long categoryId) {
+        return movieRepository.findMovieByCategories(List.of(Category.builder().id(categoryId).build()));
     }
 
     public  Optional<Movie> findById(Long id) {
@@ -69,6 +76,16 @@ public class MovieService {
 
         return Optional.empty();
     }
+
+    public void delete(Long movieId) {
+        movieRepository.deleteById(movieId);
+    }
+
+
+
+
+
+
 
     private List<Category> findCategories(List<Category> categories) {
         List<Category> categoriesFound = new ArrayList<>();
