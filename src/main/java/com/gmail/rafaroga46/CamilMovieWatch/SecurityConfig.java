@@ -27,20 +27,20 @@ public class SecurityConfig {
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST,"camilMovieWatch/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST,"camilMovieWatch/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST,"camilmoviewatch/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.POST,"camilmoviewatch/auth/login").permitAll()
                         .anyRequest().authenticated()
                 )
                 //.addFilter()
                 .build();
     }
 
-//    @Bean
-//    public AuthenticationManager authenticationManager(
-//            AuthenticationConfiguration authenticationConfiguration) throws Exception {
-//        return authenticationConfiguration.getAuthenticationManager();
-//    }
-//
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
