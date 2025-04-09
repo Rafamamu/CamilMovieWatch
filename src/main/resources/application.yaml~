@@ -22,4 +22,4 @@ spring:
 camilMovieWatch:
   security:
     jwt:
-      secret: ${SECRET_KEY}
+      secret: ${JWT_SECRET} 
