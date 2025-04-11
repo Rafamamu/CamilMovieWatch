@@ -13,7 +13,7 @@ import java.time.Instant;
 public class TokenService {
 
 
-    @Value( "${camilMovieWatch.security.secret}")
+    @Value( "${camilmoviewatch.security.secret}")
     private String secret;
 
     public String generateToken(User user) {
