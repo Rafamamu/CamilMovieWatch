@@ -1,5 +1,6 @@
 package com.gmail.rafaroga46.CamilMovieWatch.config;
 
+import com.gmail.rafaroga46.CamilMovieWatch.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,14 +13,18 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
+
 public class SecurityConfig {
 
-    // private final SecurityFilter securityFilter;
+    private final SecurityFilter securityFilter;
 
+    public SecurityConfig(SecurityFilter securityFilter) {
+        this.securityFilter = securityFilter;
+    }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -31,7 +36,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,"camilmoviewatch/auth/login").permitAll()
                         .anyRequest().authenticated()
                 )
-                //.addFilter()
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
