@@ -5,6 +5,7 @@ import com.gmail.rafaroga46.CamilMovieWatch.controller.response.MovieResponse;
 import com.gmail.rafaroga46.CamilMovieWatch.entity.Movie;
 import com.gmail.rafaroga46.CamilMovieWatch.mapper.MovieMapper;
 import com.gmail.rafaroga46.CamilMovieWatch.service.MovieService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class MovieController {
     }
 
     @PostMapping
-    public ResponseEntity<MovieResponse> save(@RequestBody MovieRequest request ) {
+    public ResponseEntity<MovieResponse> save(@Valid @RequestBody MovieRequest request ) {
         Movie savedMovie = movieService.save(MovieMapper.toMovie(request));
 
         return  ResponseEntity.ok(MovieMapper.toMovieResponse(savedMovie));
@@ -50,7 +51,7 @@ public class MovieController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MovieResponse> update(@PathVariable Long id,
+    public ResponseEntity<MovieResponse> update(@Valid @PathVariable Long id,
                                                 @RequestBody MovieRequest request) {
         return movieService.update(id,MovieMapper.toMovie(request))
                 .map(movie -> ResponseEntity.ok(MovieMapper.toMovieResponse(movie)))

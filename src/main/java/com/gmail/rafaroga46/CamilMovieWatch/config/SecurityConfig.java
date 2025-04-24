@@ -1,6 +1,7 @@
 package com.gmail.rafaroga46.CamilMovieWatch.config;
 
 import com.gmail.rafaroga46.CamilMovieWatch.entity.User;
+import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +33,7 @@ public class SecurityConfig {
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
+                        .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .requestMatchers(HttpMethod.POST,"camilmoviewatch/auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST,"camilmoviewatch/auth/login").permitAll()
                         .anyRequest().authenticated()

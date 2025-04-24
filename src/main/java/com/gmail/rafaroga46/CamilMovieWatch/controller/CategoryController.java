@@ -5,6 +5,7 @@ import com.gmail.rafaroga46.CamilMovieWatch.controller.response.CategoryResponse
 import com.gmail.rafaroga46.CamilMovieWatch.entity.Category;
 import com.gmail.rafaroga46.CamilMovieWatch.mapper.CategoryMapper;
 import com.gmail.rafaroga46.CamilMovieWatch.service.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class CategoryController {
     }
 
     @PostMapping()
-    public ResponseEntity<CategoryResponse> saveCategory(@RequestBody CategoryRequest request) {
+    public ResponseEntity<CategoryResponse> saveCategory(@Valid @RequestBody CategoryRequest request) {
         Category savedCategory = categoryService.saveCategory(CategoryMapper.toCategory(request));
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(CategoryMapper.toCategoryResponse(savedCategory));
