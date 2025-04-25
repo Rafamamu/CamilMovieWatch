@@ -21,6 +21,12 @@ spring:
     schemas: public
     baseline-on-migrate: true
 
+springdoc:
+  api-docs:
+    path: /api/api-docs
+  swagger-ui:
+    path: /swagger/index.html
+
 camilmoviewatch:
   security:
     secret: ${SECRET_KEY}

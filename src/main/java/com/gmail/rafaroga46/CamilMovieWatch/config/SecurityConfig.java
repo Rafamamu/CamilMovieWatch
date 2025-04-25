@@ -36,6 +36,8 @@ public class SecurityConfig {
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .requestMatchers(HttpMethod.POST,"camilmoviewatch/auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST,"camilmoviewatch/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/api-docs/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"swagger/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
