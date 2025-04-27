@@ -9,6 +9,12 @@ import com.gmail.rafaroga46.CamilMovieWatch.entity.User;
 import com.gmail.rafaroga46.CamilMovieWatch.exception.UserNameOrPasswordInvalidException;
 import com.gmail.rafaroga46.CamilMovieWatch.mapper.UserMapper;
 import com.gmail.rafaroga46.CamilMovieWatch.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,15 +40,27 @@ public class AuthController {
         this.tokenService = tokenService;
     }
 
+    @Operation(summary = "Registro de usuários",
+            description = "Método responsável por registrar um novo usuário.",
+            security = @SecurityRequirement(name = "bearerAuth"))
+    @ApiResponse(responseCode = "201",description = "Usuário Cadastrado com sucesso.",
+            content = @Content(schema = @Schema(implementation = UserResponse.class)))
     @PostMapping("/register")
-    public ResponseEntity<UserResponse> register(@RequestBody UserRequest request) {
+    public ResponseEntity<UserResponse> register(@Valid  @RequestBody UserRequest request) {
         User savedUser = userService.save(UserMapper.toUser(request));
         return ResponseEntity.status(HttpStatus.CREATED).body(UserMapper.toUserResponse(savedUser));
 
     }
 
+
+    @Operation(summary = "Login do usuário",
+            description = "Método responsável por gerenciar o login do usuário",
+            security = @SecurityRequirement(name = "bearerAuth"))
+    @ApiResponse(responseCode = "204",description = "Cliente logado com sucesso.",
+            content = @Content())
+    @ApiResponse(responseCode = "403",description = "Usuário ou senha inválido.",content = @Content())
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
 
         try{
             UsernamePasswordAuthenticationToken userAndPass = new UsernamePasswordAuthenticationToken(request.email(), request.password());
